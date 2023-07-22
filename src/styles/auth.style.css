@@ -1,0 +1,35 @@
+.authentication {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(/public/bg-img-3.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.authentication .card {
+  margin-top: 5%;
+  width: 50vw;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.input-field {
+  position: relative;
+}
+
+.validation {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .authentication .card {
+    width: 75vw;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .authentication .card {
+    width: 95vw;
+  }
+}

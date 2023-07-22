@@ -1,0 +1,156 @@
+body {
+
+  background: #002244;
+}
+
+.game-ui-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  position: relative;
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+  
+  overflow-x: hidden;
+}
+
+.logout-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 1px;
+  font-size: 30px;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+.logout-container img,
+.logout-container svg {
+  vertical-align: top;
+
+
+}
+
+.game-ui-wrapper .welcome-wrapper {
+  height: 17vh;
+}
+
+.game-ui .card {
+  width: 50vw;
+  height: 80vh;
+  position: relative;
+  background: rgba(240, 240, 240, 0.4);
+}
+
+.question-wrapper {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.cards-wrapper {
+  display: grid;
+  padding: 20px 1rem 0;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(130px);
+  grid-gap: 5px;
+}
+
+.answer-card {
+  padding: 0.5rem;
+  height: 140px;
+  background: #1f1e1e;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.card-shooted {
+  margin-top: -15px;
+  box-shadow: 0, 0, 5px, 10px, rgba(0, 0, 0, 0.5);
+}
+
+.card-right {
+  background: green;
+  /* background: rgb(34, 139, 34); */
+}
+
+.card-wrong {
+  background: crimson;
+}
+
+.controller-wrapper {
+  height: 100%;
+  position: relative;
+  background: rgba(240, 240, 240, 0.1);
+}
+.controller-wrapper::after {
+  content: "TrackPad";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6rem;
+  color: rgba(0, 0, 0, 0.05);
+}
+
+
+.controller-wrapper .controller-pad {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 80px 80px 0 0;
+  background: #000;
+  border-top: 10px solid rgba(240, 240, 240, 0.4);
+  border-left: 10px solid rgba(240, 240, 240, 0.4);
+  border-right: 10px solid rgba(240, 240, 240, 0.4);
+  outline: 10px solid #000;
+  z-index: 10;
+}
+
+.controller-wrapper .controller-pad .arrow-tail {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: var(--tail-height);
+  background: transparent;
+  transform-origin: 0% 100%;
+  transform: rotate(var(--angle));
+}
+
+.controller-wrapper .controller-pad .arrow-head {
+
+  position: absolute;
+  bottom: var(--top);
+  /* bottom: 100%; */
+  left: 0;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 9;
+  background: rgba(255, 255, 255, 1);
+  transition: all 0.4s linear;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .game-ui .card {
+    width: 75vw;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .game-ui .card {
+    width: 95vw;
+  }
+}
