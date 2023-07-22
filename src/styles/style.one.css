@@ -60,7 +60,7 @@ body {
   padding: 20px 1rem 0;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(130px);
-  grid-gap: 5px;
+  grid-gap: 10px;
 }
 
 .answer-card {
@@ -69,6 +69,18 @@ body {
   background: #1f1e1e;
   color: #fff;
   border-radius: 10px;
+  transition: all 0.2s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.answer-card > div {
+  word-wrap: break-word;
+}
+
+.card-focused {
+  transform: scale(1.07);
+  background: #2c2c2c;
 }
 
 .card-shooted {
@@ -147,10 +159,16 @@ body {
   .game-ui .card {
     width: 75vw;
   }
-}
-
-@media all and (max-width: 767px) {
-  .game-ui .card {
-    width: 95vw;
+    .answer-card {
+      font-size: 14px;
+    }
   }
+  
+  @media all and (max-width: 767px) {
+    .game-ui .card {
+      width: 95vw;
+    }
+    .answer-card {
+      font-size: 12px;
+    }
 }

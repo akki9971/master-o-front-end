@@ -17,7 +17,6 @@ export function Home() {
   const [score, setScore] = useState(0)
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [attemtedQuestions, setAttemtedQuestions] = useState([])
 
   const [gameOver, setGameOver] = useState('init')
 
@@ -44,11 +43,16 @@ export function Home() {
         })
   } 
 
+  function restart(){
+    setCurrentQuestion(0)
+    setScore(0)
+    setGameOver('init')
+    fetApiData()
+  }
+
   useEffect(()=>{
 
     setQuizData(data[currentQuestion ])
-    setAttemtedQuestions(prevState=>([...prevState, data[currentQuestion - 1]]))
-
 
     if(currentQuestion >= data.length) {
       setGameOver('over')
@@ -85,7 +89,7 @@ export function Home() {
           }
           {
             gameOver == 'over' && (
-              <Score score={score} />
+              <Score score={score} attempted={data.length} restart={restart} />
             )
           }
         </div>

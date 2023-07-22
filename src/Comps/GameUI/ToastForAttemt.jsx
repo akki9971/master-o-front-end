@@ -15,8 +15,9 @@ export const ToastForAttemt = (props) => {
 
     const toast_wrapper = {
         width: '70vw',
-        height: '30vh',
+        height: '33vh',
         position: 'absolute',
+        padding: '1rem',
         bottom: '10%',
         left: '50%',
         transform: 'translateX(-50%)',

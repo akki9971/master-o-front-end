@@ -32,7 +32,6 @@ export const Authentication = () => {
     let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
     if (regEmail.test(profileData.email)) {
       setEmailValid(true)
-      // console.log('Invalid Email');
     } else {
       setEmailValid(false)
     }
@@ -40,12 +39,10 @@ export const Authentication = () => {
 
   // when continue to login or register buttonclicked
   const continueClick = async () => {
-    // console.log('clicked');
 
     await axios.post(`${API_URL}/check-user`, {
       email: profileData.email
     }).then(response => {
-      console.log(response);
       if (response.data?.isRegister) {
         setGotoLogin(true)
         setGotoRegister(false)
@@ -83,15 +80,12 @@ export const Authentication = () => {
     
     await axios.post(`${API_URL}/login`, {email: profileData.email, password: profileData.password})
     .then(response => {
-      console.log(response);
       if(response.data?.success) {
-        console.log(response.data);
         localStorage.setItem("user", `${response.data?.user?.name}`)
         localStorage.setItem("loggedIn", "true")
         navigate("/quiz")
         setResponseErr({})
       } else {
-        console.log('error', response.data)
         setResponseErr(response.data)
       }
     })
@@ -100,7 +94,6 @@ export const Authentication = () => {
   const handleRegister = async() => {
     await axios.post(`${API_URL}/register`, {...profileData})
     .then(response => {
-      console.log(response);
       if(response.data?.success) {
         alert("Registration Successfull")
         setGotoLogin(true);
@@ -108,7 +101,6 @@ export const Authentication = () => {
         setResponseErr({})
       } else {
         setResponseErr(response.data)
-        console.log('error', response.data)
       }
     })
   }
