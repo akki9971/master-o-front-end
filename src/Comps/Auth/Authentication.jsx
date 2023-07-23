@@ -132,9 +132,9 @@ export const Authentication = () => {
       <div className="" >
         <div className="container authentication">
           <div className="row pt-3">
-            <div className="card mx-auto position-relative" style={{ minHeight: '75vh' }}>
-              <div className="px-3 px-sm-5 py-3 mt-5">
-                <h4 className="title mb-5 text-center">
+            <div className="card mx-auto position-relative pb-5" style={{ maxHeight: '75vh' }}>
+              <div className="px-3 px-sm-5 py-3 mt-3">
+                <h4 className="title mb-3 text-center" style={{letterSpacing:'2px'}}>
                   {
                     !gotoLogin && !gotoRegister && "Login / Register"
                   }
@@ -208,7 +208,6 @@ export const Authentication = () => {
                         {togPassType && <span className="validation" onClick={hidePassword} ><AiFillEyeInvisible color="#000" size="20px" /></span>}
                       </div>
                     </div>
-                    {gotoRegister && <p className="mb-4 fs-12 w-md-80 text-muted"><MdError size="14px" /> Password must be between 6 to 20 alphanumeric and special characters.</p>}
 
                   </>
                 }
@@ -235,7 +234,7 @@ export const Authentication = () => {
                 }
               </div>
 
-              <h4 className="position-absolute bottom-0">Note: It will not playable in touch-screen devices.</h4>
+              <h5 className="position-absolute bottom-0">Note: It will not playable in touch-screen devices.</h5>
             </div>
 
           </div>

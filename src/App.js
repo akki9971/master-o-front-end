@@ -5,7 +5,7 @@ import './App.css';
 // import './styles/globals.css'
 import './styles/auth.style.css'
 import './styles/style.one.css'
-import { Home } from './Comps/GameUI';
+import { Home } from './Comps/GameUI/Home';
 
 function App() {
   return (

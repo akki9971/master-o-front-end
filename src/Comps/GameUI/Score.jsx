@@ -29,5 +29,3 @@ export function Score({ score, attempted, restart }) {
     </div>
   )
 }
-
-export default Score

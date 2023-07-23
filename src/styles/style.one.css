@@ -14,7 +14,7 @@ body {
   /* IE 10 and IE 11 */
   user-select: none;
   /* Standard syntax */
-  
+
   overflow-x: hidden;
 }
 
@@ -74,13 +74,15 @@ body {
   justify-content: center;
   align-items: center;
 }
-.answer-card > div {
+
+.answer-card>div {
   word-wrap: break-word;
 }
 
 .card-focused {
-  transform: scale(1.07);
+  transform: scale(1.08);
   background: #2c2c2c;
+  opacity: 1;
 }
 
 .card-shooted {
@@ -100,8 +102,9 @@ body {
 .controller-wrapper {
   height: 100%;
   position: relative;
-  background: rgba(240, 240, 240, 0.1);
+  border-top: 1px solid rgba(240, 240, 240, 0.2);
 }
+
 .controller-wrapper::after {
   content: "TrackPad";
   position: absolute;
@@ -160,19 +163,26 @@ body {
   .game-ui .card {
     width: 75vw;
   }
-    .answer-card {
-      font-size: 14px;
-    }
+
+  .answer-card {
+    font-size: 14px;
   }
-  
-  @media all and (max-width: 767px) {
-    .game-ui .card {
-      width: 95vw;
-    }
-    .answer-card {
-      font-size: 12px;
-    }
-    .toast_wrapper {
-      width: 90vw;
-    }
+}
+
+@media all and (max-width: 767px) {
+  .game-ui .card {
+    width: 95vw;
+  }
+
+  .answer-card {
+    font-size: 12px;
+  }
+
+  .toast_wrapper {
+    width: 90vw;
+  }
+
+  .controller-wrapper::after {
+    font-size: 5rem;
+  }
 }

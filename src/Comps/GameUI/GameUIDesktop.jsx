@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ToastForAttemt } from './ToastForAttemt'
 
-export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQuestion }) {
+export function GameUIDesktop({ quizData, setScore, score, setCurrentQuestion, currentQuestion }) {
 
   const [isCorrect, setIsCorrect] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false)
@@ -174,7 +174,13 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
   function moveBallAccToResponsive(accurateAngle, controller_height, card_width, answer_cards) {
     
     //rotate ball on hover
-    setAngle(accurateAngle);
+    // limiting rotation of ball
+    if (accurateAngle < -80 || accurateAngle > 80) {
+      return;
+    } else {
+      setAngle(accurateAngle);
+
+    }
 
     // get horizontal distance from top center of controller  
     let secValue = 1 / Math.cos(accurateAngle * Math.PI / 180);
@@ -291,5 +297,3 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     </div>
   )
 }
-
-export default GameUI
