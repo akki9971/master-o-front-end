@@ -31,7 +31,7 @@ export const ToastForAttemt = (props) => {
     return (
         <div style={offset_wrapper}>
 
-            <div style={toast_wrapper} >
+            <div style={toast_wrapper} className="toast_wrapper" >
                 {
                     isCorrect ? (
                         <div className="bg-success p-3 rounded">

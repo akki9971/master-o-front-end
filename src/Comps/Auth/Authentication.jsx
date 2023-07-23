@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { FaCheckCircle, FaRegEdit } from 'react-icons/fa'
 import { MdError } from 'react-icons/md'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { API_URL } from '../../Constants'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
+import { BeatLoader } from 'react-spinners'
 
 export const Authentication = () => {
 
@@ -23,26 +24,34 @@ export const Authentication = () => {
   const [gotoLogin, setGotoLogin] = useState(false)
   const [gotoRegister, setGotoRegister] = useState(false)
   const [responseErr, setResponseErr] = useState({})
+  const [loading, setLoading] = useState(false)
+
 
   // email id filled & checked for mail validation
   const emailChangeHandler = (e) => {
     setProfileData({ ...profileData, email: e.target.value })
 
     // check mail validation 
-    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
+
+  }
+
+  useEffect(() => {
+    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (regEmail.test(profileData.email)) {
       setEmailValid(true)
     } else {
       setEmailValid(false)
     }
-  }
+
+  }, [profileData.email])
 
   // when continue to login or register buttonclicked
   const continueClick = async () => {
-
+    setLoading(true)
     await axios.post(`${API_URL}/check-user`, {
       email: profileData.email
     }).then(response => {
+      setLoading(false)
       if (response.data?.isRegister) {
         setGotoLogin(true)
         setGotoRegister(false)
@@ -50,6 +59,9 @@ export const Authentication = () => {
         setGotoLogin(false)
         setGotoRegister(true)
       }
+    }).catch(err => {
+      setLoading(false)
+      setResponseErr(err.message)
     })
 
   }
@@ -77,32 +89,42 @@ export const Authentication = () => {
 
 
   const handleLogin = async () => {
-    
-    await axios.post(`${API_URL}/login`, {email: profileData.email, password: profileData.password})
-    .then(response => {
-      if(response.data?.success) {
-        localStorage.setItem("user", `${response.data?.user?.name}`)
-        localStorage.setItem("loggedIn", "true")
-        navigate("/quiz")
-        setResponseErr({})
-      } else {
-        setResponseErr(response.data)
-      }
-    })
+    setLoading(true)
+
+    await axios.post(`${API_URL}/login`, { email: profileData.email, password: profileData.password })
+      .then(response => {
+        setLoading(false)
+        if (response.data?.success) {
+          localStorage.setItem("user", `${response.data?.user?.name}`)
+          localStorage.setItem("loggedIn", "true")
+          navigate("/quiz")
+          setResponseErr({})
+        } else {
+          setResponseErr(response.data)
+        }
+      }).catch(err => {
+        setLoading(false)
+        setResponseErr(err.message)
+      })
   }
 
-  const handleRegister = async() => {
-    await axios.post(`${API_URL}/register`, {...profileData})
-    .then(response => {
-      if(response.data?.success) {
-        alert("Registration Successfull")
-        setGotoLogin(true);
-        setGotoRegister(false);
-        setResponseErr({})
-      } else {
-        setResponseErr(response.data)
-      }
-    })
+  const handleRegister = async () => {
+    setLoading(true)
+    await axios.post(`${API_URL}/register`, { ...profileData })
+      .then(response => {
+        setLoading(false)
+        if (response.data?.success) {
+          alert("Registration Successfull")
+          setGotoLogin(true);
+          setGotoRegister(false);
+          setResponseErr({})
+        } else {
+          setResponseErr(response.data)
+        }
+      }).catch(err => {
+        setLoading(false)
+        setResponseErr(err.message)
+      })
   }
 
   return (
@@ -128,7 +150,7 @@ export const Authentication = () => {
                   gotoRegister && <div className="input-field-wrapper mt-3">
                     <div className="input-field">
                       <label htmlFor='name' className={`form-label fs-12 label ${profileData.name.length !== 0 ? 'valid' : ''}`}>
-                        Name
+                        Full Name
                       </label>
                       <input
                         type="text"
@@ -187,7 +209,7 @@ export const Authentication = () => {
                       </div>
                     </div>
                     {gotoRegister && <p className="mb-4 fs-12 w-md-80 text-muted"><MdError size="14px" /> Password must be between 6 to 20 alphanumeric and special characters.</p>}
-                    
+
                   </>
                 }
 
@@ -198,17 +220,19 @@ export const Authentication = () => {
                 }
                 {
                   !gotoLogin && !gotoRegister && <div className="input-field-wrapper mt-3 mt-3">
-                    <button className="btn btn-primary w-100" disabled={!emailValid} onClick={continueClick}>CONTINUE</button>
+                    <button className="btn btn-primary w-100" disabled={!emailValid} onClick={continueClick}>{loading ? <BeatLoader color="#36d7b7" /> : "CONTINUE"}</button>
                   </div>
                 }
                 {
                   gotoRegister && <div className="input-field-wrapper mt-3 ">
-                    <button className="btn btn-primary w-100" onClick={handleRegister}>Register</button>
+                    <button className="btn btn-primary w-100" onClick={handleRegister}>{loading ? <BeatLoader color="#36d7b7" /> : "Register"}</button>
                   </div>
                 }
-                {gotoLogin && <div className="input-field-wrapper mt-3 ">
-                  <button className="btn btn-dark w-100" disabled={!emailValid} onClick={handleLogin}>Login</button>
-                </div>}
+                {
+                  gotoLogin && <div className="input-field-wrapper mt-3 ">
+                    <button className="btn btn-dark w-100" disabled={!emailValid} onClick={handleLogin}>{loading ? <BeatLoader color="#36d7b7" /> : "Login"}</button>
+                  </div>
+                }
               </div>
             </div>
 

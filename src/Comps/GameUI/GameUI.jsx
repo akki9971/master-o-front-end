@@ -40,9 +40,11 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     let controller = document.querySelector('#controller_wrapper')
     if (isMouseDown == 'down') {
       controller.addEventListener('mousemove', handleMouseMove)
+      controller.addEventListener('touchmove', handleMouseMove)
 
     } else if (isMouseDown == 'up') {
       controller.removeEventListener('mousemove', handleMouseMove)
+      controller.removeEventListener('touchmove', handleMouseMove)
 
       if (cardFocused !== 'init' || cardFocused !== 'out-of-range') {
 
@@ -146,14 +148,13 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
           }, 700)
         }
 
-        if ((distanceFromCenter < (-2 * card_width) + 5) || (distanceFromCenter > (2 * card_width) + 5) ) {
-          setTimeout(()=>{
-            // reset()
-            setTop('38px')
-          },200)
+        if ((distanceFromCenter < (-2 * card_width) + 5) || (distanceFromCenter > (2 * card_width) + 5)) {
+          setTop('38px')
         }
 
 
+      } else {
+        setTop(`38px`)
       }
 
     }
@@ -338,6 +339,9 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
           id="controller_wrapper"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
+          onTouchStart={handleMouseDown}
+          onTouchEnd={handleMouseUp}
+          
         >
           <div className="controller-pad">
             <div

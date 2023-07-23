@@ -21,55 +21,60 @@ export function Home() {
   const [gameOver, setGameOver] = useState('init')
 
 
-  useEffect( ()=>{
+  useEffect(() => {
     const loggedIn = localStorage.getItem('loggedIn')
 
 
-    if(loggedIn == "true"){
-      setUser({name:localStorage.getItem('user')})
+    if (loggedIn == "true") {
+      setUser({ name: localStorage.getItem('user') })
 
       fetApiData()
+    } else {
+      navigate('/')
     }
 
-  },[])
+  }, [])
 
-  async function fetApiData (){
-          await axios
-        .get(`${API_URL}/get-questions`)
-        .then(response => {
-          if(response.status == 200 && response.data?.success){
-            setData(response.data?.questions)
-          }
-        })
-  } 
+  async function fetApiData() {
+    await axios
+      .get(`${API_URL}/get-questions`)
+      .then(response => {
+        if (response.status == 200 && response.data?.success) {
+          setData(response.data?.questions)
+        }
+      })
+  }
 
-  function restart(){
+  function restart() {
     setCurrentQuestion(0)
     setScore(0)
     setGameOver('init')
     fetApiData()
   }
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    setQuizData(data[currentQuestion ])
-
-    if(currentQuestion >= data.length) {
-      setGameOver('over')
-    } else {
-      setGameOver('running')
-    }
+    setQuizData(data[currentQuestion])
     
+    if (data.length > 0) {
+      if (currentQuestion >= data.length) {
+        setGameOver('over')
+      } else {
+        setGameOver('running')
+      }
+    }
+
+
   }, [score, currentQuestion, data])
 
   return (
     <>
       <div className="game-ui-wrapper">
-        <div className="logout-container" onClick={()=>{
+        <div className="logout-container" onClick={() => {
           navigate("/")
           localStorage.clear()
         }}>
-            <BiLogOutCircle />
+          <BiLogOutCircle />
         </div>
         <div className="container-fluid">
           <div className="welcome-wrapper">
@@ -83,12 +88,12 @@ export function Home() {
             </div>
           </div>
           {
-            gameOver != 'over' && (
+            gameOver === 'running' && (
               <GameUI quizData={quizData} setScore={setScore} score={score} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} />
             )
           }
           {
-            gameOver == 'over' && (
+            gameOver === 'over' && (
               <Score score={score} attempted={data.length} restart={restart} />
             )
           }
