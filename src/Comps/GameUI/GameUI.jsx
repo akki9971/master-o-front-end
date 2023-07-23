@@ -14,6 +14,16 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
   const [distanceFromCenter, setDistanceFromCenter] = useState(0)
   const [cardFocused, setCardFocused] = useState('init')
 
+  const [screenWidth, setScreenWidth] = useState(0)
+  const [screenHeight, setScreenHeight] = useState(0)
+
+
+useEffect(()=>{
+  window.addEventListener('resize', ()=>{
+    setScreenWidth(window.innerWidth)
+    setScreenHeight(window.innerHeight)
+  })
+},[])
 
   let [angle, setAngle] = useState(0)
 
@@ -179,14 +189,11 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
   const handleMouseMove = (event) => {
     let controller = document.querySelector('#controller_wrapper')
 
-    let screen_width = window.innerWidth;
-    let screen_height = window.innerHeight;
-
     let controller_width = controller.clientWidth
     let controller_height = controller.clientHeight
 
-    let client_x = event.clientX - (screen_width - controller_width)
-    let client_y = event.clientY - (screen_height - controller_height)
+    let client_x = event.clientX - (screenWidth - controller_width)
+    let client_y = event.clientY - (screenHeight - controller_height)
 
     let center_x = controller_width / 2
     let center_y = controller_height
@@ -200,7 +207,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
 
 
     // accurate rotation for tablet screen
-    if (screen_width <= 1024 && screen_width >= 768) {
+    if (screenWidth <= 1024 && screenWidth >= 768) {
       let accurateAngle = ((angle * Math.PI)) + 360
       setAngle(accurateAngle);
       let secValue = 1 / Math.cos(accurateAngle * Math.PI / 180);
@@ -221,7 +228,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     }
 
     // accurate rotation for mobile screen
-    if (screen_width < 768) {
+    if (screenWidth < 768) {
       let accurateAngle_1 = angle - 270
 
       setAngle(accurateAngle_1);
@@ -243,7 +250,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     }
 
     // accurate rotation for desktop or laptop screen
-    if (screen_width > 1024) {
+    if (screenWidth > 1024) {
       let accurateAngle_2 = (angle * Math.PI) + 90
       setAngle(accurateAngle_2)
       let secValue = 1 / Math.cos(accurateAngle_2 * Math.PI / 180);
@@ -268,14 +275,11 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
   const handleTouchMove = (event) => {
     let controller = document.querySelector('#controller_wrapper')
 
-    let screen_width = window.innerWidth;
-    let screen_height = window.innerHeight;
-
     let controller_width = controller.clientWidth
     let controller_height = controller.clientHeight
 
-    let client_x = event.touches[0].clientX - (screen_width - controller_width)
-    let client_y = event.touches[0].clientY - (screen_height - controller_height)
+    let client_x = event.touches[0].clientX - (screenWidth - controller_width)
+    let client_y = event.touches[0].clientY - (screenHeight - controller_height)
 
     let center_x = controller_width / 2
     let center_y = controller_height
@@ -289,7 +293,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
 
 
     // accurate rotation for tablet screen
-    if (screen_width <= 1024 && screen_width >= 768) {
+    if (screenWidth <= 1024 && screenWidth >= 768) {
       let accurateAngle = ((angle * Math.PI)) + 360
       setAngle(accurateAngle);
       let secValue = 1 / Math.cos(accurateAngle * Math.PI / 180);
@@ -310,7 +314,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     }
 
     // accurate rotation for mobile screen
-    if (screen_width < 768) {
+    if (screenWidth < 768) {
       let accurateAngle_1 = angle - 270
 
       setAngle(accurateAngle_1);
@@ -403,30 +407,59 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
             </div>
           ))}
         </div>
-        <div
-          className="controller-wrapper"
-          id="controller_wrapper"
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onTouchStart={handleMouseDown}
-          onTouchEnd={handleMouseUp}
-          
-        >
-          <div className="controller-pad">
+        {
+          screenWidth < 1024 && <>
             <div
-              className="arrow-tail"
-              style={{ "--angle": angle + 'deg', "--tail-height": tailHeight + 'px' }}
+              className="controller-wrapper"
+              id="controller_wrapper"
+              onTouchStart={handleMouseDown}
+              onTouchEnd={handleMouseUp}
+
             >
-              <div
-                className="arrow-head"
-                style={{ '--top': top }}
-              >
+              <div className="controller-pad">
+                <div
+                  className="arrow-tail"
+                  style={{ "--angle": angle + 'deg', "--tail-height": tailHeight + 'px' }}
+                >
+                  <div
+                    className="arrow-head"
+                    style={{ '--top': top }}
+                  >
 
+                  </div>
+
+                </div>
               </div>
-
             </div>
-          </div>
-        </div>
+          </>
+        }
+
+        {
+          screenWidth >= 1024 && <>
+            <div
+              className="controller-wrapper"
+              id="controller_wrapper"
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+
+            >
+              <div className="controller-pad">
+                <div
+                  className="arrow-tail"
+                  style={{ "--angle": angle + 'deg', "--tail-height": tailHeight + 'px' }}
+                >
+                  <div
+                    className="arrow-head"
+                    style={{ '--top': top }}
+                  >
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </>
+        }
       </div>
 
       {
