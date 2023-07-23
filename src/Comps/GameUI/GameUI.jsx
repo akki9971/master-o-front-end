@@ -40,11 +40,11 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
     let controller = document.querySelector('#controller_wrapper')
     if (isMouseDown == 'down') {
       controller.addEventListener('mousemove', handleMouseMove)
-      controller.addEventListener('touchmove', handleMouseMove)
+      controller.addEventListener('touchmove', handleTouchMove)
 
     } else if (isMouseDown == 'up') {
       controller.removeEventListener('mousemove', handleMouseMove)
-      controller.removeEventListener('touchmove', handleMouseMove)
+      controller.removeEventListener('touchmove', handleTouchMove)
 
       if (cardFocused !== 'init' || cardFocused !== 'out-of-range') {
 
@@ -161,6 +161,7 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
 
     return () => {
       controller.removeEventListener('mousemove', handleMouseMove)
+      controller.removeEventListener('touchmove', handleTouchMove)
       setTop('38px')
 
     }
@@ -261,6 +262,74 @@ export function GameUI({ quizData, setScore, score, setCurrentQuestion, currentQ
       }
     }
 
+
+  }
+
+  const handleTouchMove = (event) => {
+    let controller = document.querySelector('#controller_wrapper')
+
+    let screen_width = window.innerWidth;
+    let screen_height = window.innerHeight;
+
+    let controller_width = controller.clientWidth
+    let controller_height = controller.clientHeight
+
+    let client_x = event.touches[0].clientX - (screen_width - controller_width)
+    let client_y = event.touches[0].clientY - (screen_height - controller_height)
+
+    let center_x = controller_width / 2
+    let center_y = controller_height
+
+
+    // to find angle between cursor position and center point of controller
+    let angle = Math.atan2(client_y - center_y, client_x - center_x) * (180 / Math.PI)
+
+    let answer_cards = document.querySelectorAll('.answer-card')
+    let card_width = answer_cards[0].clientWidth
+
+
+    // accurate rotation for tablet screen
+    if (screen_width <= 1024 && screen_width >= 768) {
+      let accurateAngle = ((angle * Math.PI)) + 360
+      setAngle(accurateAngle);
+      let secValue = 1 / Math.cos(accurateAngle * Math.PI / 180);
+      let tanValue = Math.tan(accurateAngle * Math.PI / 180)
+      let distance = tanValue * controller_height
+
+      setDistanceFromCenter(distance)
+      focusCardOnHover(distance, card_width, answer_cards)
+
+      if (secValue < 0) {
+        let height = secValue * (-1) * controller_height
+        setTailHeight(height)
+      } else {
+        let height = secValue * controller_height
+        setTailHeight(height)
+      }
+
+    }
+
+    // accurate rotation for mobile screen
+    if (screen_width < 768) {
+      let accurateAngle_1 = angle - 270
+
+      setAngle(accurateAngle_1);
+      let secValue = 1 / Math.cos(accurateAngle_1 * Math.PI / 180);
+      let tanValue = Math.tan(accurateAngle_1 * Math.PI / 180)
+      let distance = tanValue * controller_height
+
+      setDistanceFromCenter(distance)
+      focusCardOnHover(distance, card_width, answer_cards)
+
+
+      if (secValue < 0) {
+        let height = secValue * (-1) * controller_height
+        setTailHeight(height)
+      } else {
+        let height = secValue * controller_height
+        setTailHeight(height)
+      }
+    }
 
   }
 
