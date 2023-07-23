@@ -132,7 +132,7 @@ export const Authentication = () => {
       <div className="" >
         <div className="container authentication">
           <div className="row pt-3">
-            <div className="card mx-auto " style={{ minHeight: '75vh' }}>
+            <div className="card mx-auto position-relative" style={{ minHeight: '75vh' }}>
               <div className="px-3 px-sm-5 py-3 mt-5">
                 <h4 className="title mb-5 text-center">
                   {
@@ -234,6 +234,8 @@ export const Authentication = () => {
                   </div>
                 }
               </div>
+
+              <h4 className="position-absolute bottom-0">Note: It will not playable in touch-screen devices.</h4>
             </div>
 
           </div>
