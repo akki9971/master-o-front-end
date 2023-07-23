@@ -171,8 +171,9 @@ body {
 
 @media all and (max-width: 767px) {
   .game-ui .card {
-    width: 95vw;
+    width: 93vw;
   }
+
 
   .answer-card {
     font-size: 12px;
@@ -184,5 +185,18 @@ body {
 
   .controller-wrapper::after {
     font-size: 5rem;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .game-ui .card {
+    width: 100%;
+  }
+
+  .cards-wrapper {
+    padding: 20px 0.3rem 0;
+  }
+  .game-ui {
+    height: 75vh;
   }
 }
