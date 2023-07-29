@@ -87,7 +87,7 @@ export function Home() {
         }}>
           <BiLogOutCircle />
         </div>
-        <div className="container-fluid position-relative top-0 left-0" style={{zIndex:99}}>
+        <div className="container-fluid position-relative top-0 left-0" style={{zIndex:20}}>
           <div className="welcome-wrapper">
             <div className="text-center text-white ">
               <h2 className=" my-3">
