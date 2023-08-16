@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 // import { SphereBufferGeometry } from 'three';
 
@@ -29,11 +29,12 @@ const Globe = () => {
 
         <Stars />
 
-        <mesh ref={globeRef}>
-          {/* <sphereBufferGeometry args={[1, 64, 64]} /> */}
+        {/* <mesh ref={globeRef}>
+          {/* <sphereBufferGeometry args={[1, 64, 64]} />
           <hemisphereLight intensity={0.15} groundColor="black" />
           <meshStandardMaterial color="#4488ee" />
-        </mesh>
+        </mesh> */}
+        <Box position={[0, 0, 0]} />
 
         <OrbitControls />
       </Canvas>
@@ -41,4 +42,17 @@ const Globe = () => {
   );
 };
 
+
+
 export default Globe;
+
+function Box(props) {
+   const mesh = useRef();
+   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
+   return (
+      <mesh {...props} ref={mesh}>
+         <boxGeometry args={[50, 50, 50]} />
+         <meshStandardMaterial color={"#f1f1f1"} />
+      </mesh>
+   );
+}
