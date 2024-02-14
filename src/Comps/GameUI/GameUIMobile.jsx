@@ -45,6 +45,13 @@ export function GameUIMobile({ quizData, setScore, score, setCurrentQuestion, cu
 
       if (cardFocused !== 'init' || cardFocused !== 'out-of-range') {
 
+        let cannonWrapper = document.querySelector(".cannon-wrapper")
+        cannonWrapper.style.bottom = "-25px"
+        setTimeout(() => {
+          cannonWrapper.style.bottom = "-17px"
+
+        }, 200)
+
         setTop(`${tailHeight - 35}px`)
 
         let answer_cards = document.querySelectorAll('.answer-card')
@@ -170,7 +177,7 @@ export function GameUIMobile({ quizData, setScore, score, setCurrentQuestion, cu
     
     //rotate ball on hover
     // limiting rotation of ball
-    if(accurateAngle < -85 || accurateAngle > 85){
+    if (accurateAngle < -65 || accurateAngle > 65) {
       return;
     } else {
       setAngle(accurateAngle);
@@ -273,8 +280,11 @@ export function GameUIMobile({ quizData, setScore, score, setCurrentQuestion, cu
               className="arrow-tail"
               style={{ "--angle": angle + 'deg', "--tail-height": tailHeight + 'px' }}
             >
+              <div className="cannon-wrapper">
+                <img src="./cannon_top_view.png" alt="Canon" className="cannon-img" />
+              </div>
               <div
-                className="arrow-head bg-warning"
+                className="arrow-head "
                 style={{ '--top': top }}
               >
               </div>

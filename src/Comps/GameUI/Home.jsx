@@ -8,6 +8,7 @@ import { isBrowser, isMobile, isTablet } from 'react-device-detect';
 import { GameUIMobile } from './GameUIMobile';
 import { GameUIDesktop } from './GameUIDesktop';
 import { GridLoader } from 'react-spinners'
+import Globe from './Globe';
 
 
 
@@ -78,18 +79,19 @@ export function Home() {
 
   return (
     <>
-      <div className="game-ui-wrapper">
+      <div className="game-ui-wrapper" id="game_ui">
+        <Globe />
         <div className="logout-container" onClick={() => {
           navigate("/")
           localStorage.clear()
         }}>
           <BiLogOutCircle />
         </div>
-        <div className="container-fluid">
+        <div className="container-fluid position-relative top-0 left-0" style={{zIndex:20}}>
           <div className="welcome-wrapper">
             <div className="text-center text-white ">
               <h2 className=" my-3">
-                <span className="border-bottom">
+                <span className="border-bottom" style={{letterSpacing:2}}>
                   Hello, {user?.name}
                 </span>
               </h2>

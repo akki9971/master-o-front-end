@@ -45,6 +45,12 @@ export function GameUIDesktop({ quizData, setScore, score, setCurrentQuestion, c
 
       if (cardFocused !== 'init' || cardFocused !== 'out-of-range') {
 
+        let cannonWrapper = document.querySelector(".cannon-wrapper")
+        cannonWrapper.style.bottom = "-25px"
+        setTimeout(()=>{
+          cannonWrapper.style.bottom = "-17px"
+          
+        }, 200)
         setTop(`${tailHeight - 35}px`)
 
         let answer_cards = document.querySelectorAll('.answer-card')
@@ -151,6 +157,7 @@ export function GameUIDesktop({ quizData, setScore, score, setCurrentQuestion, c
     // accurate rotation for tablet screen
     if (screenWidth <= 1024 && screenWidth >= 768) {
       let accurateAngle = ((angle * Math.PI)) + 360;
+      console.log(accurateAngle);
       moveBallAccToResponsive(accurateAngle, controller_height, card_width, answer_cards)
 
     }
@@ -175,7 +182,7 @@ export function GameUIDesktop({ quizData, setScore, score, setCurrentQuestion, c
     
     //rotate ball on hover
     // limiting rotation of ball
-    if (accurateAngle < -80 || accurateAngle > 80) {
+    if (accurateAngle < -65 || accurateAngle > 65) {
       return;
     } else {
       setAngle(accurateAngle);
@@ -278,6 +285,9 @@ export function GameUIDesktop({ quizData, setScore, score, setCurrentQuestion, c
               className="arrow-tail"
               style={{ "--angle": angle + 'deg', "--tail-height": tailHeight + 'px' }}
             >
+              <div className="cannon-wrapper">
+                <img src="./cannon_top_view.png" alt="Canon" className="cannon-img" />
+              </div>
               <div
                 className="arrow-head"
                 style={{ '--top': top }}
