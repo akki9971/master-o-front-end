@@ -52,12 +52,12 @@ body {
 }
 
 .game-ui-wrapper .welcome-wrapper {
-  height: 17vh;
+  height: 17dvh;
 }
 
 .game-ui .card {
   width: 50vw;
-  height: 80vh;
+  height: 80dvh;
   position: relative;
   /* background: rgba(240, 240, 240, 0.4); */
   background: rgba(255, 255, 255, 0.2);
@@ -235,6 +235,6 @@ body {
   }
 
   .game-ui {
-    height: 75vh;
+    height: 75dvh;
   }
 }
