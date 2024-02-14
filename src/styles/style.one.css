@@ -5,7 +5,7 @@ body {
 
 .globe-wrapper {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: hidden;
   position: absolute;
   left: 0;
@@ -16,7 +16,7 @@ body {
 
 .game-ui-wrapper {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: hidden;
   position: relative;
   -webkit-user-select: none;
